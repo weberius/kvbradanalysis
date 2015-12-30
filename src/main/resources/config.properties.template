@@ -1,0 +1,5 @@
+# in dieser Datei wird die Anwendung konfiguriert. 
+# Sie ist aber nur eine Vorlage. 
+# Die fehlenden Einträge müssen ergänzt werden.
+# Danach ist die Datei in config.properties zu kopieren.
+kvbradrouting.bikesmap.url=http://localhost:8080/kvbradrouting/service/json

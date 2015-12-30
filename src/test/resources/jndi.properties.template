@@ -1,0 +1,6 @@
+# jndi parameter for testing only
+servername=<servername>
+portnumber=<portnumber>
+databasename=<databasename>
+user=<user>
+password=<password>
