@@ -32,13 +32,24 @@ public class Service {
 
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
-	@Path("/analysis")
-	public String insertFahrraederRouting() throws JsonParseException,
+	@Path("/put")
+	public String putRoutingAnalyse() throws JsonParseException,
 			JsonMappingException, IOException, SQLException, NamingException,
 			ClassNotFoundException {
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
-		Facade facade = new AnalysisFacade();
+		Facade facade = new RoutingAnalyseFacade();
+		return facade.getJson();
+	}
+
+	@GET
+	@Produces({ MediaType.APPLICATION_JSON })
+	@Path("/geoJson")
+	public String getGeojson() throws JsonParseException, JsonMappingException,
+			IOException, SQLException, NamingException, ClassNotFoundException {
+		request.setCharacterEncoding("UTF-8");
+		response.setCharacterEncoding("UTF-8");
+		Facade facade = new GeoJsonFacade();
 		return facade.getJson();
 	}
 
