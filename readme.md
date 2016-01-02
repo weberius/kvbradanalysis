@@ -12,6 +12,20 @@ Es ist m√∂glich die durch die Routing Funktion erstellten Daten im Json-Format √
 
 ## Datenbank
 
+### Datentabelle
+
+	CREATE TABLE analysis (
+    	number       integer NOT NULL,
+    	modtime      timestamp DEFAULT current_timestamp
+	);
+	SELECT AddGeometryColumn ('public','analysis','geom',4326,'LINESTRING',2);
+
+### Steuerungstabelle
+
+	CREATE TABLE kvbradanalysis (
+	    numberofinsert      integer,
+	    modtime      timestamp DEFAULT current_timestamp
+	);
 
 
 ## Test
