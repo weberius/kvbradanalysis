@@ -8,6 +8,7 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
+import org.apache.log4j.Logger;
 import org.postgresql.ds.PGSimpleDataSource;
 
 /**
@@ -32,13 +33,21 @@ import org.postgresql.ds.PGSimpleDataSource;
 public class JndiProperties {
 
 	private static final String JNDI_PROPERTIES = "/jndi.properties";
+	private static final Logger logger = Logger.getLogger(JndiProperties.class);
 
 	public static void setUpConnectionForJndi() throws IOException {
 
 		InputStream inputStream = JndiProperties.class
 				.getResourceAsStream(JNDI_PROPERTIES);
 		Properties properties = new Properties();
-		properties.load(inputStream);
+		try {
+			properties.load(inputStream);
+		} catch (NullPointerException e) {
+			logger.error("no '" + JNDI_PROPERTIES
+					+ "' defined. Please do so in 'src/test/properties'. "
+					+ "Use 'src/test/properties/jndi.properties.template.' "
+					+ "for template");
+		}
 
 		try {
 			// Create initial context
