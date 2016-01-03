@@ -13,9 +13,9 @@ import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 
 import de.illilli.jdbc.ConnectionFactory;
-import de.illilli.opendata.service.LastRunWriter;
+import de.illilli.opendata.service.DbWriter;
 
-public class LastRunWriterToDb implements LastRunWriter {
+public class LastRunWriterToDb implements DbWriter {
 
 	private static final Logger logger = Logger
 			.getLogger(LastRunWriterToDb.class);
