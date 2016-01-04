@@ -43,7 +43,7 @@ public class Service {
 
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
-	@Path("/geoJson")
+	@Path("/geojson")
 	public String getGeojson() throws JsonParseException, JsonMappingException,
 			IOException, SQLException, NamingException, ClassNotFoundException {
 		request.setCharacterEncoding("UTF-8");
