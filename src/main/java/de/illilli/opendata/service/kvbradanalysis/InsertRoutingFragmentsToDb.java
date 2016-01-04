@@ -33,22 +33,19 @@ public class InsertRoutingFragmentsToDb implements DbWriter {
 			int number = kvbradrouting.getNumber();
 			String value = kvbradrouting.getValue();
 
-			List<Double[]> points = null;
+			List<Point[]> points = new Value2PointArrayListConverter(value)
+					.getPointArrayList();
 
-			Point[] pointArray = new Point[points.size()];
-			for (int i = 0; i < points.size(); i++) {
-				Double[] point = points.get(i);
-				pointArray[i] = new Point(point[0], point[1]);
+			for (Point[] pointArray : points) {
+				LineString lineString = new LineString(pointArray);
+				lineString.srid = kvbradrouting.getSrid();
+
+				PreparedStatement preparedStatement = conn
+						.prepareStatement(sql);
+				preparedStatement.setInt(1, number);
+				preparedStatement.setObject(2, new PGgeometry(lineString));
+				numberOfInserts += preparedStatement.executeUpdate();
 			}
-
-			LineString lineString = new LineString(pointArray);
-			lineString.srid = kvbradrouting.getSrid();
-
-			PreparedStatement preparedStatement = conn.prepareStatement(sql);
-			preparedStatement.setInt(1, number);
-			preparedStatement.setObject(4, new PGgeometry(lineString));
-
-			numberOfInserts = preparedStatement.executeUpdate();
 
 		}
 		try {

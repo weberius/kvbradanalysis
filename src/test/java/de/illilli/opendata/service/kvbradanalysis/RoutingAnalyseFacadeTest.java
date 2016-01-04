@@ -20,6 +20,8 @@ public class RoutingAnalyseFacadeTest {
 			NamingException {
 		JndiProperties.setUpConnectionForJndi();
 		Facade facade = new RoutingAnalyseFacade();
+		String json = facade.getJson();
+		System.out.println(json);
 	}
 
 }

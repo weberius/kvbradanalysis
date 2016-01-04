@@ -28,20 +28,18 @@ public class RoutingAnalyseFacade implements Facade {
 		this.lastrun = new SelectLastrunFromDb().getTime();
 		// Routing Ergebnisse von kvbradrouting erfragen
 		AskForKvbradrouting askFor = new AskForKvbradrouting();
-		// Routing Ergebnisse aufsplitten
-
-		// Aufgesplittete Ergebnisse in die Datenbank schreiben
+		// Ergebnisse in die Datenbank schreiben
 		DbWriter dbWriter = new InsertRoutingFragmentsToDb(
 				askFor.getKvbradroutingList());
 		// vermerken, dass Daten geschrieben wurde
-		this.lastRunWriter = new LastRunWriterToDb(0);
-
+		this.lastRunWriter = new LastRunWriterToDb(
+				dbWriter.getNumberOfInserts());
 	}
 
 	@Override
 	public String getJson() throws JsonProcessingException {
-		// TODO Auto-generated method stub
-		return null;
+		return "Anzahl eingefügter Routings: "
+				+ this.lastRunWriter.getNumberOfInserts();
 	}
 
 }
