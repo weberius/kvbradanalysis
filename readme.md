@@ -10,6 +10,20 @@ Es ist möglich die durch die Routing Funktion erstellten Daten im Json-Format �
 
 Über den REST-EndPoint /kvbradanalysis/service/geojson lassen sich alle routing-Informationen abfragen.
 
+### Farbgebung
+
+Der Service liefert die Farbcodes zur direkten Verwendung aus. Sie wurden mit Hilfe von [COLORBREWER 2.0](http://colorbrewer2.org/) bestimmt:
+
+- #d7191c
+- #fdae61
+- #ffffbf
+- #a6d96a
+- #1a9641
+
+(colorbrewer2.org.png "Diese Farben stehen zur Verfügung")
+
+
+
 ## Datenbank
 
 ### Datentabelle
