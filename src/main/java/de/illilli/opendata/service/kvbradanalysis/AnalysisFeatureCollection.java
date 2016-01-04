@@ -1,10 +1,14 @@
 package de.illilli.opendata.service.kvbradanalysis;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.sql.SQLException;
 import java.util.Hashtable;
 import java.util.List;
 import java.util.Map;
+
+import javax.naming.NamingException;
 
 import org.geojson.Feature;
 import org.geojson.FeatureCollection;
@@ -12,19 +16,26 @@ import org.geojson.LineString;
 import org.geojson.LngLatAlt;
 
 import de.illilli.jdbc.Select;
-import de.illilli.opendata.service.kvbradanalysis.jdbc.CountNumberofGeomDao;
+import de.illilli.opendata.service.kvbradanalysis.jdbc.CountGeomDao;
+import de.illilli.opendata.service.kvbradanalysis.jdbc.SelectMaxCountFromDb;
 
 public class AnalysisFeatureCollection {
 
 	private FeatureCollection featureCollection;
 
-	public AnalysisFeatureCollection(Select<CountNumberofGeomDao> select) {
+	public AnalysisFeatureCollection(Select<CountGeomDao> select)
+			throws SQLException, NamingException, IOException {
 		featureCollection = new FeatureCollection();
 
-		List<CountNumberofGeomDao> objectList = select.getDbObjectList();
-		int maxNumberOf = objectList.get(0).getNumberof();
+		List<CountGeomDao> objectList = select.getDbObjectList();
+		int maxCount = new SelectMaxCountFromDb().getMaxCount();
 
-		for (CountNumberofGeomDao obj : objectList) {
+		for (CountGeomDao obj : objectList) {
+
+			Double index = new BigDecimal(obj.getCount()).divide(
+					new BigDecimal(maxCount), 2, RoundingMode.HALF_UP)
+					.doubleValue();
+
 			Feature feature = new Feature();
 			LineString lineString = new LineString();
 			org.postgis.LineString pgLineString = (org.postgis.LineString) obj
@@ -36,9 +47,6 @@ public class AnalysisFeatureCollection {
 			}
 			feature.setGeometry(lineString);
 			Map<String, Object> properties = new Hashtable<String, Object>();
-			Double index = new BigDecimal(obj.getNumberof()).divide(
-					new BigDecimal(maxNumberOf), 2, RoundingMode.HALF_UP)
-					.doubleValue();
 			properties.put("index", index);
 			feature.setProperties(properties);
 			featureCollection.add(feature);

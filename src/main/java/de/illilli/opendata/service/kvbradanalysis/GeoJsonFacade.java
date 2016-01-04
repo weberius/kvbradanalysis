@@ -11,15 +11,18 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import de.illilli.opendata.service.Facade;
-import de.illilli.opendata.service.kvbradanalysis.jdbc.SelectCountNumberofGeomFromAnalysis;
+import de.illilli.opendata.service.kvbradanalysis.jdbc.SelectCountGeomFromAnalysisresult;
 
 public class GeoJsonFacade implements Facade {
 
 	private FeatureCollection featureCollection;
 
 	public GeoJsonFacade() throws SQLException, NamingException, IOException {
+
+		int minCount = 50;
+
 		featureCollection = new AnalysisFeatureCollection(
-				new SelectCountNumberofGeomFromAnalysis())
+				new SelectCountGeomFromAnalysisresult(minCount))
 				.getFeatureCollection();
 	}
 

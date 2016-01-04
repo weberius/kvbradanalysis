@@ -34,6 +34,16 @@ Der Service liefert die Farbcodes zur direkten Verwendung aus. Sie wurden mit Hi
 	);
 	SELECT AddGeometryColumn ('public','analysis','geom',4326,'LINESTRING',2);
 
+### Ergebnistabelle
+
+In der Ergebnistabelle werden die aggregierten Ergebnisse zur schnellen Abfrage vorgehalten. Es werden stets zunächst die vorhandenen Ergebnisse gelöscht um dann die aktuellen Ergebnisse hinzuzufügen. 
+
+	CREATE TABLE analysisresult (
+    	count       integer NOT NULL
+	);
+	SELECT AddGeometryColumn ('public','analysisresult','geom',4326,'LINESTRING',2);
+
+
 ### Steuerungstabelle
 
 	CREATE TABLE kvbradanalysis (

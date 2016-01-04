@@ -20,10 +20,10 @@ public class SelectCountNumberofGeomFromAnalysisTest {
 	public static void main(String[] args) throws SQLException,
 			NamingException, IOException {
 		JndiProperties.setUpConnectionForJndi();
-		Select<CountNumberofGeomDao> select = new SelectCountNumberofGeomFromAnalysis();
-		List<CountNumberofGeomDao> objectList = select.getDbObjectList();
-		CountNumberofGeomDao firstDao = objectList.get(0);
-		System.out.println("numberOf: " + firstDao.getNumberof());
+		Select<CountGeomDao> select = new SelectCountGeomFromAnalysisresult(0);
+		List<CountGeomDao> objectList = select.getDbObjectList();
+		CountGeomDao firstDao = objectList.get(0);
+		System.out.println("numberOf: " + firstDao.getCount());
 		System.out.println("objectList size: " + objectList.size());
 	}
 
