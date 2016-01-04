@@ -14,11 +14,11 @@ import org.geojson.LngLatAlt;
 import de.illilli.jdbc.Select;
 import de.illilli.opendata.service.kvbradanalysis.jdbc.CountNumberofGeomDao;
 
-public class RoutingFeatureCollection {
+public class AnalysisFeatureCollection {
 
 	private FeatureCollection featureCollection;
 
-	public RoutingFeatureCollection(Select<CountNumberofGeomDao> select) {
+	public AnalysisFeatureCollection(Select<CountNumberofGeomDao> select) {
 		featureCollection = new FeatureCollection();
 
 		List<CountNumberofGeomDao> objectList = select.getDbObjectList();

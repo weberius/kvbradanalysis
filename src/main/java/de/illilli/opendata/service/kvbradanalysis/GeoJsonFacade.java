@@ -18,7 +18,7 @@ public class GeoJsonFacade implements Facade {
 	private FeatureCollection featureCollection;
 
 	public GeoJsonFacade() throws SQLException, NamingException, IOException {
-		featureCollection = new RoutingFeatureCollection(
+		featureCollection = new AnalysisFeatureCollection(
 				new SelectCountNumberofGeomFromAnalysis())
 				.getFeatureCollection();
 	}
