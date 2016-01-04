@@ -20,7 +20,7 @@ Der Service liefert die Farbcodes zur direkten Verwendung aus. Sie wurden mit Hi
 - #a6d96a
 - #1a9641
 
-(colorbrewer2.org.png "Diese Farben stehen zur Verfügung")
+![Farbgebung](colorbrewer2.org.png "Diese Farben stehen zur Verfügung")
 
 
 
