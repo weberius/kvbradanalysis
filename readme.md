@@ -43,6 +43,13 @@ In der Ergebnistabelle werden die aggregierten Ergebnisse zur schnellen Abfrage 
 	);
 	SELECT AddGeometryColumn ('public','analysisresult','geom',4326,'LINESTRING',2);
 
+Mit folgendem insert werden die Daten aggregiert:
+
+    insert into analysisresult ( 
+      select count(number) numberof, geom 
+      from analysis 
+      group by geom
+    )
 
 ### Steuerungstabelle
 
