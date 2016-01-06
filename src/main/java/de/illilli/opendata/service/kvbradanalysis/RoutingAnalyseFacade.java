@@ -16,30 +16,25 @@ import de.illilli.opendata.service.kvbradanalysis.jdbc.SelectLastrunFromDb;
 
 public class RoutingAnalyseFacade implements Facade {
 
-	private static final Logger logger = Logger
-			.getLogger(RoutingAnalyseFacade.class);
+	private static final Logger logger = Logger.getLogger(RoutingAnalyseFacade.class);
 
 	private long lastrun;
 	private DbWriter lastRunWriter;
 
-	public RoutingAnalyseFacade() throws SQLException, NamingException,
-			IOException {
+	public RoutingAnalyseFacade() throws SQLException, NamingException, IOException {
 		// letzten Lauf ermitteln
 		this.lastrun = new SelectLastrunFromDb().getTime();
 		// Routing Ergebnisse von kvbradrouting erfragen
-		AskForKvbradrouting askFor = new AskForKvbradrouting();
+		AskForKvbradrouting askFor = new AskForKvbradrouting(this.lastrun);
 		// Ergebnisse in die Datenbank schreiben
-		DbWriter dbWriter = new InsertRoutingFragmentsToDb(
-				askFor.getKvbradroutingList());
+		DbWriter dbWriter = new InsertRoutingFragmentsToDb(askFor.getKvbradroutingList());
 		// vermerken, dass Daten geschrieben wurde
-		this.lastRunWriter = new LastRunWriterToDb(
-				dbWriter.getNumberOfInserts());
+		this.lastRunWriter = new LastRunWriterToDb(dbWriter.getNumberOfInserts());
 	}
 
 	@Override
 	public String getJson() throws JsonProcessingException {
-		return "Anzahl eingefügter Routings: "
-				+ this.lastRunWriter.getNumberOfInserts();
+		return "Anzahl eingefügter Routings: " + this.lastRunWriter.getNumberOfInserts();
 	}
 
 }
