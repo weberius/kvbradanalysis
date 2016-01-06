@@ -25,9 +25,8 @@ public class AskForKvbradrouting {
 		deserialize();
 	}
 
-	public AskForKvbradrouting(long lastrun) throws MalformedURLException,
-			IOException {
-		url = url + "/lastrun";
+	public AskForKvbradrouting(long lastrun) throws MalformedURLException, IOException {
+		url = url + "/" + lastrun;
 		this.inputStream = new URL(url).openStream();
 		deserialize();
 	}
