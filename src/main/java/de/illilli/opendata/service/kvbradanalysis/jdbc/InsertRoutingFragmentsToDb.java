@@ -1,4 +1,4 @@
-package de.illilli.opendata.service.kvbradanalysis;
+package de.illilli.opendata.service.kvbradanalysis.jdbc;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -16,6 +16,8 @@ import org.postgis.Point;
 
 import de.illilli.jdbc.ConnectionFactory;
 import de.illilli.opendata.service.DbWriter;
+import de.illilli.opendata.service.kvbradanalysis.Kvbradrouting;
+import de.illilli.opendata.service.kvbradanalysis.Value2PointArrayListConverter;
 
 public class InsertRoutingFragmentsToDb implements DbWriter {
 

@@ -11,6 +11,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 
 import de.illilli.opendata.service.DbWriter;
 import de.illilli.opendata.service.Facade;
+import de.illilli.opendata.service.kvbradanalysis.jdbc.InsertRoutingFragmentsToDb;
 import de.illilli.opendata.service.kvbradanalysis.jdbc.LastRunWriterToDb;
 import de.illilli.opendata.service.kvbradanalysis.jdbc.SelectLastrunFromDb;
 
