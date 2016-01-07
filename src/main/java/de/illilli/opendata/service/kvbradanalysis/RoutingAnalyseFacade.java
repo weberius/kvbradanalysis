@@ -12,7 +12,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import de.illilli.opendata.service.DbWriter;
 import de.illilli.opendata.service.Facade;
 import de.illilli.opendata.service.kvbradanalysis.jdbc.InsertRoutingFragmentsToDb;
-import de.illilli.opendata.service.kvbradanalysis.jdbc.LastRunWriterToDb;
+import de.illilli.opendata.service.kvbradanalysis.jdbc.InsertLastRunToDb;
 import de.illilli.opendata.service.kvbradanalysis.jdbc.SelectLastrunFromDb;
 
 public class RoutingAnalyseFacade implements Facade {
@@ -30,7 +30,7 @@ public class RoutingAnalyseFacade implements Facade {
 		// Ergebnisse in die Datenbank schreiben
 		DbWriter dbWriter = new InsertRoutingFragmentsToDb(askFor.getKvbradroutingList());
 		// vermerken, dass Daten geschrieben wurde
-		this.lastRunWriter = new LastRunWriterToDb(dbWriter.getNumberOfInserts());
+		this.lastRunWriter = new InsertLastRunToDb(dbWriter.getNumberOfInserts());
 	}
 
 	@Override

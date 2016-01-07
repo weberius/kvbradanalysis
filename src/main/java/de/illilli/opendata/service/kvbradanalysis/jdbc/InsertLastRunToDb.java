@@ -15,16 +15,16 @@ import org.apache.log4j.Logger;
 import de.illilli.jdbc.ConnectionFactory;
 import de.illilli.opendata.service.DbWriter;
 
-public class LastRunWriterToDb implements DbWriter {
+public class InsertLastRunToDb implements DbWriter {
 
 	private static final Logger logger = Logger
-			.getLogger(LastRunWriterToDb.class);
+			.getLogger(InsertLastRunToDb.class);
 	private int inserts;
 
 	String queryString = "/insertLastRun.sql";
 	String queryStringWithTimestamp = "/insertLastRunWithTimestamp.sql";
 
-	public LastRunWriterToDb(int numberOfInserts) throws SQLException,
+	public InsertLastRunToDb(int numberOfInserts) throws SQLException,
 			NamingException, IOException {
 
 		Connection conn = ConnectionFactory.getConnection();
@@ -40,7 +40,7 @@ public class LastRunWriterToDb implements DbWriter {
 		logger.info(inserts + " inserted");
 	}
 
-	public LastRunWriterToDb(int numberOfInserts, long modtime)
+	public InsertLastRunToDb(int numberOfInserts, long modtime)
 			throws SQLException, NamingException, IOException {
 
 		Connection conn = ConnectionFactory.getConnection();
