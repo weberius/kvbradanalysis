@@ -1,4 +1,4 @@
-package de.illilli.opendata.service.kvbradanalysis;
+package de.illilli.opendata.service.kvbradanalysis.jdbc;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -8,18 +8,19 @@ import javax.naming.NamingException;
 import org.junit.Before;
 
 import de.illilli.jdbc.JndiProperties;
-import de.illilli.opendata.service.Facade;
+import de.illilli.opendata.service.DbWriter;
 
 /**
  * <p>
  * Dieser Test hat zur Zeit mangels einer Integrations-Stage nur eine
- * main-Methode, die es ermöglicht, die Funktion manuell zu überprüfen.
+ * main-Methode, die es ermöglicht, das Einfügen der Werte in der Tabelle
+ * <code>analysisresult</code> zu überprüfen.
  * </p>
  * <p>
  * TODO: Mit Integrations-Stage Test implementieren.
  * </p>
  */
-public class RoutingAnalyseFacadeTest {
+public class InsertAnalysisResultTest {
 
 	@Before
 	public void setUp() throws Exception {
@@ -27,9 +28,9 @@ public class RoutingAnalyseFacadeTest {
 
 	public static void main(String[] args) throws IOException, SQLException, NamingException {
 		JndiProperties.setUpConnectionForJndi();
-		Facade facade = new RoutingAnalyseFacade();
-		String json = facade.getJson();
-		System.out.println(json);
+		DbWriter insert = new InsertAnalysisResult();
+		int numberOfInserts = insert.getNumberOfInserts();
+		System.out.println("numberOfInserts = '" + numberOfInserts + "'");
 	}
 
 }

@@ -27,36 +27,29 @@ public class InsertRoutingFragmentsToDb implements DbWriter {
 	public InsertRoutingFragmentsToDb(List<Kvbradrouting> kvbradroutingList)
 			throws SQLException, IOException, NamingException {
 		Connection conn = ConnectionFactory.getConnection();
-		InputStream inputStream = this.getClass().getResourceAsStream(
-				this.queryString);
+		InputStream inputStream = this.getClass().getResourceAsStream(this.queryString);
 		String sql = IOUtils.toString(inputStream);
 
 		for (Kvbradrouting kvbradrouting : kvbradroutingList) {
 			int number = kvbradrouting.getNumber();
 			String value = kvbradrouting.getValue();
 
-			List<Point[]> points = new Value2PointArrayListConverter(value)
-					.getPointArrayList();
+			List<Point[]> points = new Value2PointArrayListConverter(value).getPointArrayList();
 
 			for (Point[] pointArray : points) {
 				LineString lineString = new LineString(pointArray);
 				lineString.srid = kvbradrouting.getSrid();
 
-				PreparedStatement preparedStatement = conn
-						.prepareStatement(sql);
+				PreparedStatement preparedStatement = conn.prepareStatement(sql);
 				preparedStatement.setInt(1, number);
 				preparedStatement.setObject(2, new PGgeometry(lineString));
 				numberOfInserts += preparedStatement.executeUpdate();
+				preparedStatement.close();
+
 			}
 
 		}
-		try {
-			conn.close();
-		} catch (SQLException e) {
-
-		} finally {
-
-		}
+		conn.close();
 	}
 
 	@Override
