@@ -15,18 +15,19 @@ public class AskForKvbradroutingTest {
 	}
 
 	@Test
-	public void testGetKvbradroutingList() throws IOException {
-		InputStream inputStream = this.getClass().getResourceAsStream(
-				"/kvbradrouting.json");
+	public void testGetKvbradrouting21489() throws IOException {
+		InputStream inputStream = this.getClass().getResourceAsStream("/kvbradrouting.json");
 		AskForKvbradrouting askFor = new AskForKvbradrouting(inputStream);
 		List<Kvbradrouting> list = askFor.getKvbradroutingList();
-		System.out.println(list);
+		Kvbradrouting krr = list.get(0);
+		int actual = krr.getNumber();
+		int expected = 21489;
+		Assert.assertEquals(expected, actual);
 	}
 
 	@Test
 	public void testNumberOfKvbradrouting() throws IOException {
-		InputStream inputStream = this.getClass().getResourceAsStream(
-				"/kvbradrouting.json");
+		InputStream inputStream = this.getClass().getResourceAsStream("/kvbradrouting.json");
 		AskForKvbradrouting askFor = new AskForKvbradrouting(inputStream);
 		List<Kvbradrouting> list = askFor.getKvbradroutingList();
 		int expected = 11661;
