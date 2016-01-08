@@ -8,6 +8,7 @@ import java.net.URL;
 import java.util.List;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.log4j.Logger;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -16,6 +17,7 @@ import de.illilli.opendata.service.Config;
 
 public class AskForKvbradrouting {
 
+	private static final Logger logger = Logger.getLogger(AskForKvbradrouting.class);
 	private String url = Config.getProperty("kvbradrouting.json.url");
 	private InputStream inputStream;
 	private List<Kvbradrouting> kvbradroutingList;
@@ -27,6 +29,7 @@ public class AskForKvbradrouting {
 
 	public AskForKvbradrouting(long lastrun) throws MalformedURLException, IOException {
 		url = url + "/" + lastrun;
+		logger.info(url);
 		this.inputStream = new URL(url).openStream();
 		deserialize();
 	}
