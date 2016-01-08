@@ -31,11 +31,23 @@ public class Service {
 	@Context
 	private HttpServletResponse response;
 
+	/**
+	 * <p>
+	 * Beispiel:
+	 * <code>curl -X PUT http://localhost:8080/kvbradanalysis/service/put</code>
+	 * </p>
+	 * 
+	 * @throws JsonParseException
+	 * @throws JsonMappingException
+	 * @throws IOException
+	 * @throws SQLException
+	 * @throws NamingException
+	 * @throws ClassNotFoundException
+	 */
 	@PUT
 	@Path("/put")
-	public void putRoutingAnalyse() throws JsonParseException,
-			JsonMappingException, IOException, SQLException, NamingException,
-			ClassNotFoundException {
+	public void putRoutingAnalyse() throws JsonParseException, JsonMappingException, IOException, SQLException,
+			NamingException, ClassNotFoundException {
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		Facade facade = new RoutingAnalyseFacade();
@@ -44,8 +56,8 @@ public class Service {
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
 	@Path("/geojson")
-	public String getGeojson() throws JsonParseException, JsonMappingException,
-			IOException, SQLException, NamingException, ClassNotFoundException {
+	public String getGeojson() throws JsonParseException, JsonMappingException, IOException, SQLException,
+			NamingException, ClassNotFoundException {
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		Facade facade = new GeoJsonFacade();
