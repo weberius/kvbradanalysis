@@ -1,2 +1,2 @@
-select max(count) as maxcount 
+select max(count) as number 
 from analysisresult

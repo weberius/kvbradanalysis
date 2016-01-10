@@ -9,14 +9,16 @@ import org.apache.commons.dbutils.handlers.BeanHandler;
 
 import de.illilli.jdbc.Select;
 
-public class SelectMaxCountFromDb extends Select<NumberDao> {
+public class SelectCeilAvgCountFromAnalysisresult extends Select<NumberDao> {
 
-	String queryString = "/selectMaxCount.sql";
+	String queryString = "/selectCeilAvgCountFromAnalysisresult.sql";
 
-	public SelectMaxCountFromDb() throws SQLException, NamingException, IOException {
+	public SelectCeilAvgCountFromAnalysisresult() throws SQLException, NamingException, IOException {
+
 		setQueryString(queryString);
 		Object[] params = new Object[] {};
 		runSelect(new BeanHandler<NumberDao>(NumberDao.class), params);
+
 	}
 
 }

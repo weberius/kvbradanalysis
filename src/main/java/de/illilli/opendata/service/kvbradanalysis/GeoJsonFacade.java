@@ -11,6 +11,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import de.illilli.opendata.service.Facade;
+import de.illilli.opendata.service.kvbradanalysis.jdbc.SelectCeilAvgCountFromAnalysisresult;
 import de.illilli.opendata.service.kvbradanalysis.jdbc.SelectCountGeomFromAnalysisresult;
 
 public class GeoJsonFacade implements Facade {
@@ -19,10 +20,9 @@ public class GeoJsonFacade implements Facade {
 
 	public GeoJsonFacade() throws SQLException, NamingException, IOException {
 
-		int minCount = 50;
+		int minCount = new SelectCeilAvgCountFromAnalysisresult().getDbObject().getNumber();
 
-		featureCollection = new AnalysisFeatureCollection(
-				new SelectCountGeomFromAnalysisresult(minCount))
+		featureCollection = new AnalysisFeatureCollection(new SelectCountGeomFromAnalysisresult(minCount))
 				.getFeatureCollection();
 	}
 

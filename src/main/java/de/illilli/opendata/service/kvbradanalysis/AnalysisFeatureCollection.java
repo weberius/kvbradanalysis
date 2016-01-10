@@ -23,23 +23,20 @@ public class AnalysisFeatureCollection {
 
 	private FeatureCollection featureCollection;
 
-	public AnalysisFeatureCollection(Select<CountGeomDao> select)
-			throws SQLException, NamingException, IOException {
+	public AnalysisFeatureCollection(Select<CountGeomDao> select) throws SQLException, NamingException, IOException {
 		featureCollection = new FeatureCollection();
 
 		List<CountGeomDao> objectList = select.getDbObjectList();
-		int maxCount = new SelectMaxCountFromDb().getMaxCount();
+		int maxCount = new SelectMaxCountFromDb().getDbObject().getNumber();
 
 		for (CountGeomDao obj : objectList) {
 
-			Double index = new BigDecimal(obj.getCount()).divide(
-					new BigDecimal(maxCount), 2, RoundingMode.HALF_UP)
+			Double index = new BigDecimal(obj.getCount()).divide(new BigDecimal(maxCount), 2, RoundingMode.HALF_UP)
 					.doubleValue();
 
 			Feature feature = new Feature();
 			LineString lineString = new LineString();
-			org.postgis.LineString pgLineString = (org.postgis.LineString) obj
-					.getGeom().getGeometry();
+			org.postgis.LineString pgLineString = (org.postgis.LineString) obj.getGeom().getGeometry();
 			org.postgis.Point[] points = pgLineString.getPoints();
 			for (org.postgis.Point point : points) {
 				LngLatAlt element = new LngLatAlt(point.getX(), point.getY());

@@ -53,6 +53,20 @@ public class Service {
 		Facade facade = new RoutingAnalyseFacade();
 	}
 
+	/**
+	 * <p>
+	 * <a href="http://localhost:8080/kvbradanalysis/service/geojson">
+	 * /kvbradanalysis/service/geojson</a>
+	 * </p>
+	 * 
+	 * @return
+	 * @throws JsonParseException
+	 * @throws JsonMappingException
+	 * @throws IOException
+	 * @throws SQLException
+	 * @throws NamingException
+	 * @throws ClassNotFoundException
+	 */
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
 	@Path("/geojson")
