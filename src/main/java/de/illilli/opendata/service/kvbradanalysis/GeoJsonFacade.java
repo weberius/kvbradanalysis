@@ -5,6 +5,7 @@ import java.sql.SQLException;
 
 import javax.naming.NamingException;
 
+import org.apache.log4j.Logger;
 import org.geojson.FeatureCollection;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -16,13 +17,15 @@ import de.illilli.opendata.service.kvbradanalysis.jdbc.SelectCountGeomFromAnalys
 
 public class GeoJsonFacade implements Facade {
 
+	private static final Logger logger = Logger.getLogger(GeoJsonFacade.class);
+
 	private FeatureCollection featureCollection;
 
 	public GeoJsonFacade() throws SQLException, NamingException, IOException {
 
 		int minCount = new SelectCeilAvgCountFromAnalysisresult().getDbObject().getNumber();
-
-		featureCollection = new AnalysisFeatureCollection(new SelectCountGeomFromAnalysisresult(minCount))
+		logger.info("minCount: " + minCount);
+		featureCollection = new AnalysisFeatureMultiLinesCollection(new SelectCountGeomFromAnalysisresult(minCount))
 				.getFeatureCollection();
 	}
 
