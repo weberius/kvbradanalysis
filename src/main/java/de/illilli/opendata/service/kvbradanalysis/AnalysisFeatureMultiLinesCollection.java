@@ -25,6 +25,11 @@ import de.illilli.opendata.service.kvbradanalysis.jdbc.SelectMaxCountFromDb;
 public class AnalysisFeatureMultiLinesCollection {
 
 	private FeatureCollection featureCollection;
+	List<LngLatAlt> elements = new ArrayList<LngLatAlt>();
+	LngLatAlt elementBefore = new LngLatAlt(0.0, 0.0);
+
+	org.postgis.Point[] pointsBefore = new org.postgis.Point[] { new org.postgis.Point(0.0, 0.0),
+			new org.postgis.Point(0.0, 0.0) };
 
 	public AnalysisFeatureMultiLinesCollection(Select<CountGeomDao> select)
 			throws SQLException, NamingException, IOException {
@@ -36,8 +41,6 @@ public class AnalysisFeatureMultiLinesCollection {
 
 		Collection<Feature> collectionOfFeatures = new ArrayList<Feature>();
 
-		List<LngLatAlt> elements = new ArrayList<LngLatAlt>();
-
 		MultiLineString mls0 = new MultiLineString();
 		MultiLineString mls1 = new MultiLineString();
 		MultiLineString mls2 = new MultiLineString();
@@ -45,27 +48,49 @@ public class AnalysisFeatureMultiLinesCollection {
 
 		for (CountGeomDao obj : objectList) {
 
-			elements = new ArrayList<LngLatAlt>();
-
 			Double index = new BigDecimal(obj.getCount()).divide(new BigDecimal(maxCount), 2, RoundingMode.HALF_UP)
 					.doubleValue();
 
 			org.postgis.LineString pgLineString = (org.postgis.LineString) obj.getGeom().getGeometry();
 			org.postgis.Point[] points = pgLineString.getPoints();
-			for (org.postgis.Point point : points) {
-				LngLatAlt element = new LngLatAlt(point.getX(), point.getY());
-				elements.add(element);
-			}
-			if (index < 0.25) {
-				mls0.add(elements);
-			} else if (index < 0.375) {
-				mls1.add(elements);
-			} else if (index < 0.5) {
-				mls2.add(elements);
+
+			// initialisiere die List nur, wenn das aktuelle nicht mit dem
+			// vorherigen übereinstimmt
+			boolean pointBeforeEqualsPoint = true;
+			if (pointsBefore[1].equals(points[0])) {
+				pointBeforeEqualsPoint = true;
 			} else {
-				mls3.add(elements);
+				elements = new ArrayList<LngLatAlt>();
+				pointBeforeEqualsPoint = false;
 			}
 
+			// füge element nur hinzu, wenn es nicht mit dem
+			// vorhergehenden übereinstimmt
+			for (org.postgis.Point point : points) {
+				LngLatAlt element = new LngLatAlt(point.getX(), point.getY());
+				if (!elementBefore.equals(element)) {
+					elements.add(element);
+				}
+			}
+
+			if (index < 0.25) {
+				if (!pointBeforeEqualsPoint) {
+					mls0.add(elements);
+				}
+			} else if (index < 0.375) {
+				if (!pointBeforeEqualsPoint) {
+					mls1.add(elements);
+				}
+			} else if (index < 0.5) {
+				if (!pointBeforeEqualsPoint) {
+					mls2.add(elements);
+				}
+			} else {
+				if (!pointBeforeEqualsPoint) {
+					mls3.add(elements);
+				}
+			}
+			pointsBefore = points;
 		}
 
 		Feature feature0 = new Feature();
