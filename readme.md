@@ -8,7 +8,7 @@ Es ist möglich die durch die Routing Funktion erstellten Daten im Json-Format �
 
 ### GeoJson Service
 
-Über den REST-EndPoint /kvbradanalysis/service/geojson lassen sich alle routing-Informationen abfragen.
+Über den REST-EndPoint /kvbradanalysis/service/data?geojson lassen sich alle routing-Informationen abfragen.
 
 ### Farbgebung
 

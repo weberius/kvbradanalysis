@@ -55,8 +55,8 @@ public class Service {
 
 	/**
 	 * <p>
-	 * <a href="http://localhost:8080/kvbradanalysis/service/geojson">
-	 * /kvbradanalysis/service/geojson</a>
+	 * <a href="http://localhost:8080/kvbradanalysis/service/data?geojson">
+	 * /kvbradanalysis/service/data?geojson</a>
 	 * </p>
 	 * 
 	 * @return
@@ -69,7 +69,7 @@ public class Service {
 	 */
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
-	@Path("/geojson")
+	@Path("/data")
 	public String getGeojson() throws JsonParseException, JsonMappingException, IOException, SQLException,
 			NamingException, ClassNotFoundException {
 		request.setCharacterEncoding("UTF-8");
