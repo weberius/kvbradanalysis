@@ -2,27 +2,31 @@
 
 Dieser Service analysiert die durch [kvbradrouting](https://github.com/codeforcologne/kvbradrouting) ermittelten Fahrradrouten durch Köln. Er holt sich die dort hinterlegten Routen, teilt sie in Unterabschnitte auf und persistiert diese in der Datenbank. Danach können diese durchgezählt werden. 
 
-### Json Service
+## Services
 
-Es ist möglich die durch die Routing Funktion erstellten Daten im Json-Format über den REST-Endpoint /kvbradanalysis/service/json abzufragen.
+### /kvbradanalysis/service/put
 
-### GeoJson Service
+Der Service /kvbradanalysis/service/put löst die Analyse aus. Hier wird folgendermaßen vorgegangen:
+
+1. Zeitpunkt des letzten Laufes ermitteln
+2. Routing Ergebnisse von kvbradrouting erfragen
+3. Ergebnisse in die Datenbank schreiben
+4. delete analysis-values
+5. write analysis-values
+6. vermerken, dass Daten geschrieben wurde
+
+Der Service kann mit curl aufgerufen werden, und sollte einmal täglich laufen. Er kann durch einen CRON ausgelöst werden:
+
+    curl -X PUT http://localhost:8080/kvbradanalysis/service/put
+    
+Dafür kann das Skript `kvbradanalysis.sh` verwendet werden. Diese wird mit `sudo EDITOR=vim.tiny crontab -e` in die cron-Liste eingtragen (Beispiel wird jede Nacht um 03:03 Uhr ausgeführt):
+
+    3 3 * * * /home/pi/kvbradanalysis.sh
+
+
+### /kvbradanalysis/service/data?geojson
 
 Über den REST-EndPoint /kvbradanalysis/service/data?geojson lassen sich alle routing-Informationen abfragen.
-
-### Farbgebung
-
-Der Service liefert die Farbcodes zur direkten Verwendung aus. Sie wurden mit Hilfe von [COLORBREWER 2.0](http://colorbrewer2.org/) bestimmt:
-
-- #d7191c
-- #fdae61
-- #ffffbf
-- #a6d96a
-- #1a9641
-
-![Farbgebung](colorbrewer2.org.png "Diese Farben stehen zur Verfügung")
-
-
 
 ## Datenbank
 
