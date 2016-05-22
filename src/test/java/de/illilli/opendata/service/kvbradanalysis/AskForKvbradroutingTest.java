@@ -4,11 +4,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
 public class AskForKvbradroutingTest {
+
+	private static final Logger logger = Logger.getLogger(AskForKvbradroutingTest.class);
 
 	@Before
 	public void setUp() throws Exception {
@@ -32,6 +35,7 @@ public class AskForKvbradroutingTest {
 		List<Kvbradrouting> list = askFor.getKvbradroutingList();
 		int expected = 11661;
 		int actual = list.size();
+		logger.info("expected: " + expected + "; actual: " + actual);
 		Assert.assertEquals(expected, actual);
 	}
 
