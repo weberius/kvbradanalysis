@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import javax.naming.NamingException;
 
 import org.junit.Before;
-import org.junit.Test;
 
 import de.illilli.jdbc.JndiProperties;
 import de.illilli.opendata.service.Facade;
@@ -17,8 +16,7 @@ public class GeoJsonFacadeTest {
 	public void setUp() throws Exception {
 	}
 
-	@Test
-	public void testGetJson() throws SQLException, NamingException, IOException {
+	public static void main(String[] args) throws SQLException, NamingException, IOException {
 		JndiProperties.setUpConnectionForJndi();
 		Facade afc = new GeoJsonFacade();
 		String json = afc.getJson();
