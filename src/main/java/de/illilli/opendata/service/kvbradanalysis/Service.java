@@ -48,6 +48,7 @@ public class Service {
 	@Path("/put")
 	public void putRoutingAnalyse() throws JsonParseException, JsonMappingException, IOException, SQLException,
 			NamingException, ClassNotFoundException {
+		logger.info("putRoutingAnalyse");
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
 		Facade facade = new RoutingAnalyseFacade();
@@ -55,8 +56,15 @@ public class Service {
 
 	/**
 	 * <p>
+	 * To get geojson - Data use this:
 	 * <a href="http://localhost:8080/kvbradanalysis/service/data?geojson">
 	 * /kvbradanalysis/service/data?geojson</a>
+	 * </p>
+	 * 
+	 * <p>
+	 * To get geojson - Data with threshold use this: <a href=
+	 * "http://localhost:8080/kvbradanalysis/service/data?geojson&threshold=3">
+	 * /kvbradanalysis/service/data?geojson&threshold=3</a>
 	 * </p>
 	 * 
 	 * @return
@@ -72,9 +80,17 @@ public class Service {
 	@Path("/data")
 	public String getGeojson() throws JsonParseException, JsonMappingException, IOException, SQLException,
 			NamingException, ClassNotFoundException {
+
 		request.setCharacterEncoding("UTF-8");
 		response.setCharacterEncoding("UTF-8");
-		Facade facade = new GeoJsonFacade();
+
+		boolean geojson = request.getParameter("geojson") != null;
+		String threshold = request.getParameter("threshold");
+
+		logger.info("getGeojson; geojson = '" + geojson + "', threshold = '" + threshold + "'");
+
+		Facade facade = new GeoJsonFacade(threshold);
+
 		return facade.getJson();
 	}
 

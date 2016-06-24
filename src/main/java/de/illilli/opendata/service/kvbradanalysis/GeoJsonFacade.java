@@ -21,12 +21,50 @@ public class GeoJsonFacade implements Facade {
 
 	private FeatureCollection featureCollection;
 
+	/**
+	 * Der Wert für threshold gibt den unteren Schwellwert an. Er hängt an der
+	 * Anzahl der gezählten Line-String Stücke. Es wird ein Integer erwartet.
+	 * Bei Übergabe von 'null' oder einer beliebigen Zeichenkette, wird ein
+	 * Durchschnittswert aus den Datenbankeinträgen ermittelt.
+	 * 
+	 * @param threshold
+	 *            eine ganze Zahl; wenn nicht gewünscht 'null'
+	 * @throws SQLException
+	 * @throws NamingException
+	 * @throws IOException
+	 */
+	public GeoJsonFacade(String threshold) throws SQLException, NamingException, IOException {
+
+		int minCount = 0;
+		try {
+			minCount = Integer.parseInt(threshold);
+			logger.info("threshold = " + minCount);
+		} catch (NumberFormatException e) {
+			minCount = new SelectCeilAvgCountFromAnalysisresult().getDbObject().getNumber();
+			logger.error("no value for threshold; threshold = " + minCount);
+		}
+
+		logger.info("minCount: " + minCount);
+		featureCollection = new AnalysisFeatureMultiLinesCollection(new SelectCountGeomFromAnalysisresult(minCount))
+				.getFeatureCollection();
+	}
+
+	/**
+	 * Der Threshold ermittelt sich mit Hilfe von
+	 * SelectCeilAvgCountFromAnalysisresult aus dem Mittelwert der Einträge.
+	 * 
+	 * @throws SQLException
+	 * @throws NamingException
+	 * @throws IOException
+	 * @see SelectCeilAvgCountFromAnalysisresult
+	 */
 	public GeoJsonFacade() throws SQLException, NamingException, IOException {
 
 		int minCount = new SelectCeilAvgCountFromAnalysisresult().getDbObject().getNumber();
 		logger.info("minCount: " + minCount);
 		featureCollection = new AnalysisFeatureMultiLinesCollection(new SelectCountGeomFromAnalysisresult(minCount))
 				.getFeatureCollection();
+
 	}
 
 	@Override
